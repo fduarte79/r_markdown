@@ -1,0 +1,280 @@
+---
+title: "R Markdown"
+author: "By Felipe Duarte"
+date: "`r format(Sys.time(), '%d de %B de %Y')`"
+output:
+    html_document:
+        highlight: textmate
+        number_Sections: yes
+        toc: yes
+        toc_float:
+            collapsed: yes
+            smooth_Scroll: yes
+---
+
+# 1. Produção textual
+
+------------------------------------------------------------------------
+
+## 1.1 - Elementos da escrita
+
+`# Título - 1º nível`\
+`## Título - 2º nível`\
+`### Título - 3º nível`
+
+Itens não enumerados
+
+```         
+-   Item 1.
+    -   Item 1.1.
+        -   Item 1.1.1.
+-   Item 2.
+```
+
+Itens enumerados
+
+```         
+1.  Item i
+    i)  Item ii
+        A.  Item iii
+2.  Item i
+```
+
+**negrito**: `**negrito**`\
+*itálico*: `*itálico*`\
+^subscrito^: `^subscrito^`\
+~subscrito~: `~subscrito~`\
+caixa de código: `` `caixa de código` ``\
+quebra de linha ou linha em branco (dois espaços): `` `  ` ``\
+[Link](https://cran.r-project.org/): `[Link](https://cran.r-project.org/)`\
+Imagem:`![R](https://cran.r-project.org/Rlogo.svg){width="15%"}`\
+Citação: `>`\
+comentário: `<!-- comentário -->`
+
+nota de rodapé[^1]\
+
+[^1]: nota
+
+`nota de rodapé[^numero]`\
+`[^numero]: nota`
+
+------------------------------------------------------------------------
+
+## 1.2 - Equações:
+
+Somatório: `$$\sum_{k=1}^{n}a_k$$` $$\sum_{k=1}^{n}a_k$$
+
+Limite: `$$\lim_{x\to a} f(x) = L$$` $$\lim_{x\to a} f(x) = L$$
+
+Integral: `$$\int_{a}^{b} f(x)dx$$` $$\int_{a}^{b} f(x)dx$$
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+# 2. Opções do `chunck`
+
+sem parâmetros
+
+```{r}
+0
+```
+
+**ECHO**\
+
+`echo = TRUE`: (padrão) mostra o código e exibe os resultados
+
+```{r echo = T}
+0
+```
+
+`echo = FALSE`: **oculta o código** e mas exibe os resultados
+
+```{r echo = F}
+0
+```
+
+**EVAL**\
+`eval = TRUE` (padrão) executa o código e exibe o resultados
+
+```{r eval = TRUE}
+0
+```
+
+`eval = FALSE` **não executa**, apenas exibe o código
+
+```{r eval = FALSE}
+0
+```
+
+**WARNINGS**\
+`warning = TRUE`: (padrão) exibe avisos do R;
+
+```{r warning = TRUE}
+library(dplyr)
+```
+
+`warning = FALSE`: oculta os avisos.
+
+```{r warning = FALSE}
+library(dplyr)
+```
+
+`message = TRUE`: (padrão) exibe mensagens (do library(), por exemplo); `message = FALSE`: oculta mensagens.
+
+`collapse = FALSE`: (padrão) mantém código e saída separados;
+
+```{r collapse = FALSE}
+library(dplyr)
+```
+
+`collapse = TRUE`: une o código e a saída no mesmo bloco.
+
+```{r collapse = FALSE}
+library(dplyr)
+```
+
+```{r include=FALSE}
+a = 1 + 3 + 4
+a
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+# 3. Tabelas
+
+------------------------------------------------------------------------
+
+## 3.1 Tabelas melhoradas
+
+Tabela com linhas alternadas
+
+```{r}
+library(rmarkdown)
+paged_table(BOD)
+
+```
+
+------------------------------------------------------------------------
+
+## 3.2 - Explorando com o `Kable`
+
+Opções:\
+`basic`: ,\
+`striped`: ,\
+`bordered`: ,\
+`hover`: ,\
+`condensed`: ,\
+`responsive`,\
+`none`: .
+
+Renomeando as colunas
+
+```{r}
+library(kableExtra)
+kable(head(iris, n = 7L)) %>% kable_styling(full_width = F)
+```
+
+```{r}
+library(kableExtra)
+kable(head(iris, n = 7L)) %>% kable_styling(full_width = F, bootstrap_options = c("basic"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("striped"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("bordered"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("hover"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("condensed"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("responsive"))
+```
+
+```{r}
+kable(head(iris, n = 7L))  %>% kable_styling(full_width = F, bootstrap_options = c("none"))
+```
+
+```{r}
+library(kableExtra)
+kable(head(iris, n = 7L)) %>% kable_styling(full_width = F, bootstrap_options = c("striped", "bordered", "condensed", "hover"))
+```
+
+```{r}
+NROW(iris[which(iris$Species == "setosa"),])
+```
+
+Contando o número de linhas: o número é de `r NROW(iris[which(iris$Species == "setosa"),])` linhas
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+# 4. Tabelas com abas
+
+------------------------------------------------------------------------
+
+## 4.1 Primeiro Dataset (com código exposto e sem transição entre as abas) {.tabset}
+
+### Tabela
+
+```{r}
+library(kableExtra)
+kable(head(iris, n = 7L)) %>% kable_styling(full_width = F, bootstrap_options = c("striped", "bordered", "condensed", "hover"))
+```
+
+### Gráfico
+
+```{r}
+library(ggplot2)
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point()
+```
+
+------------------------------------------------------------------------
+
+## 4.2 Segundo Dataset (com código oculto e transição entre as abas) {.tabset .tabset-fade}
+
+### Tabela Melhorada
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(kableExtra)
+kable(head(iris, n = 7L)) %>% kable_styling(full_width = F, bootstrap_options = c("striped", "bordered", "condensed", "hover"))
+```
+
+### Gráfico
+
+```{r echo=FALSE, message=FALSE, warning=FALSE}
+library(ggplot2)
+ggplot(data = iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point()
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+# Referências
+
+------------------------------------------------------------------------
+
+[R Markdown- por Fernanda Peres](https://www.youtube.com/playlist?list=PLOw62cBQ5j9VV0WR533an6wmh9dZFUFKJ)\
